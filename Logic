@@ -1,0 +1,54 @@
+//Run Counter
+int counter = 0; //main variable which we will manipulate to control the visualization
+int counterDir = 1; //variable that we use to increase or decrease the counter by one
+int rows = 10; // constant that determines the height of the grid 
+int cols = 10; // constant that determines the width of the grid
+
+void setup() { //runs once
+  size(500, 500); //sets the size of the sketch
+  frameRate(15); //we run this at a lower FPS to see the animation. Think of other ways to avoid lowering the FPS.
+}
+
+void draw() { //loops over and over till you quit the sketch
+  background(255);
+
+  fill(0);
+  textSize(15);
+  text("counter = "+counter/2, 20, 40); //text to display the value of counter variable
+
+  for (int i=0; i<rows; i++) { //nested for loop, iterating first through the cols, then the rows.
+    for (int j=0; j<cols; j++) { //how do you get it to iterate through the rows first?
+      int checkCounter = i*cols + j; //we use this local variable to count the number of squares to "paint"
+      stroke(200, 200, 200);
+      if (checkCounter < counter/2) { //a conditional to decide which squares to "paint"
+        if(checkCounter % 3 == 2) {
+          fill(0,255,0); 
+        }
+        
+        
+        else {
+          fill(255, 215, 0);
+        }
+      } 
+      else if(i > 4){
+        if(checkCounter % 3 == 1) {
+          fill(0,0,255);
+        } 
+        else {
+          fill(120,10,50);
+        }
+      }
+      else {
+        fill(120, 10, 50);
+      }
+      rect(j*30+20, i*30+100, 20, 20); //draw the rectagles (all of them) (some will be green, while others will be white)
+    }
+  }
+
+  counter = counter + counterDir; //change the counter by adding itself to the counterDir variable
+  if (counter >= rows*cols) { //conditional to change the direction of the animation
+    counterDir = -1;
+  } else if (counter <= 0) {
+    counterDir = 1;
+  }
+}
